@@ -35,6 +35,9 @@ function loadPlugin(extra = {}) {
     isApp: true,
     Plugin: { register() {} },
     Blockbench: { version: "5.1.4", showQuickMessage() {} },
+    // execute_script is off by default in the plugin; most tests exercise the
+    // transport checks with it enabled, and override this where it matters.
+    settings: { blockbench_mcp_allow_scripts: { value: true } },
     ...extra,
   };
   sandbox.globalThis = sandbox;
@@ -141,6 +144,17 @@ test("execute_script is rejected when the 'Allow execute_script' setting is off"
   const { bridge, sandbox } = loadPlugin({
     settings: { blockbench_mcp_allow_scripts: { value: false } },
   });
+  const res = await send(bridge, {
+    headers: MCP_HEADERS,
+    body: scriptBody("globalThis.__ran = true; return 1"),
+  });
+  assert.equal(res.json.ok, false);
+  assert.match(res.json.error, /disabled/);
+  assert.equal(sandbox.__ran, undefined);
+});
+
+test("execute_script is rejected when the setting does not exist (off by default)", async () => {
+  const { bridge, sandbox } = loadPlugin({ settings: {} });
   const res = await send(bridge, {
     headers: MCP_HEADERS,
     body: scriptBody("globalThis.__ran = true; return 1"),
