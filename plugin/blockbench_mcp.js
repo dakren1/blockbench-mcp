@@ -6941,7 +6941,7 @@ function getPort() {
 
 function scriptsAllowed() {
 	const setting = typeof settings !== 'undefined' && settings && settings[PLUGIN_ID + '_allow_scripts'];
-	return !setting || setting.value !== false;
+	return !!setting && setting.value === true;
 }
 
 // ---------------------------------------------------------------------------
@@ -7222,9 +7222,9 @@ function buildUI() {
 	const allowScriptsSetting = new Setting(PLUGIN_ID + '_allow_scripts', {
 		name: 'Allow execute_script',
 		description: 'Let the connected MCP client run arbitrary JavaScript in Blockbench. ' +
-			'Turn off if you do not fully trust the client or the content it reads (prompt injection).',
+			'Off by default. Only enable if you fully trust the client and the content it reads (prompt injection).',
 		category: 'general',
-		value: true,
+		value: false,
 		type: 'toggle',
 	});
 
