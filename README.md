@@ -48,7 +48,7 @@ All three models were built, textured and posed by an AI through Blockbench MCP.
 ```bash
 git clone https://github.com/sosadly/blockbench-mcp.git
 cd blockbench-mcp
-npm install && npm run build
+pnpm install && pnpm build
 ```
 
 1. In **Blockbench desktop**, open **File ▸ Plugins ▸ Load Plugin from File** and pick [`plugin/blockbench_mcp.js`](plugin/blockbench_mcp.js). Allow network access when asked.
@@ -126,8 +126,8 @@ curl http://127.0.0.1:8787/ping
 ```bash
 git clone https://github.com/sosadly/blockbench-mcp.git
 cd blockbench-mcp
-npm install
-npm run build
+pnpm install
+pnpm build
 ```
 
 ### 3. Connect your AI client
@@ -364,9 +364,9 @@ Harmless. Blockbench tries to fetch store metadata for the side-loaded plugin an
 ## Development
 
 ```bash
-npm run dev     # tsc --watch
-npm run build   # one-off compile to dist/
-npm test        # build, then run the tool-catalogue tests against dist/
+pnpm dev       # tsc --watch
+pnpm build     # one-off compile to dist/
+pnpm test      # build, then run the tool-catalogue tests against dist/
 ```
 
 - MCP tool definitions live in [`src/tools.ts`](src/tools.ts), the HTTP client in [`src/client.ts`](src/client.ts), the server entry in [`src/index.ts`](src/index.ts), and tests in [`test/tools.test.js`](test/tools.test.js) (Node's built-in runner, no extra dependencies).
